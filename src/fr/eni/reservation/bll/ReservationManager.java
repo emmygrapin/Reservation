@@ -30,21 +30,21 @@ public class ReservationManager {
 	
 	public void addReservation(Reservation reservation) 
 	{
-		validerReservation();
+		validerReservation(reservation);
 		daoReservation.insert(reservation);
 		
 	}
 	
 	public void removeReservation(Reservation reservation)
 	{
-		daoReservation.delete(reservation.getIdReservation());
+		daoReservation.delete(reservation.getCodeReservation());
 	}
 	
 	public void validerReservation(Reservation reservation)
 	{
 		String error = "";
 		
-		if(reservation.getSpectacle().getPlacesRestante() < reservation.getNbPlaces())
+		if(reservation.getSpectacle().getPlacesDispos() < reservation.getNbPlacesReservation())
 		{
 			error += "Il n'y a pas suffisament de places.";
 		}
