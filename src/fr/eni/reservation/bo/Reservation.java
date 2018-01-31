@@ -1,7 +1,6 @@
 package fr.eni.reservation.bo;
 
-import java.util.Date;
-
+import java.sql.Date;
 public class Reservation {
 	private String codeReservation;
 	private Client client;
