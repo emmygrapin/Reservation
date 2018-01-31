@@ -1,30 +1,20 @@
 package fr.eni.reservation.ihm;
 
 import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Vector;
+import java.util.List;
 
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
+
+import fr.eni.reservation.bll.ClientManager;
+import fr.eni.reservation.bo.Client;
+import fr.eni.reservation.dal.DALException;
 
 
 public class reservation extends JFrame {
@@ -36,7 +26,7 @@ public class reservation extends JFrame {
 	
 	
 	
-	public reservation()
+	public reservation() throws DALException
 	{
 		// Création du conteneur de plus haut niveau		
 		this.setTitle("Reservation");
@@ -51,50 +41,10 @@ public class reservation extends JFrame {
 		// Fermeture de l'application JAVA lorsque on clique sur la croix
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		this.setupIHM();
+		this.basePanel();
 		
 		// J'affiche la fenêtre
 		this.setVisible(true);
-	}
-	
-	private void setupIHM()
-	{
-		// Creation du panel
-		panel = new JPanel();
-		
-		JScrollPane scrollPane = new JScrollPane(panel);
-		 
-		panel.setSize(this.getWidth(), this.getHeight());
-		panel.setOpaque(true);
-		
-		// Mise en place Layout
-		panel.setLayout(new GridBagLayout());
-		GridBagConstraints gbc = new GridBagConstraints();
-		
-		
-		//Espace entre les cases
-		gbc.insets = new Insets(5, 5, 5, 5);
-		
-		//Création du menu
-		this.setJMenuBar(addMenu());
-		
-		// Colonne 1
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		panel.add(this.addLabelWelcome(), gbc);
-		gbc.gridy = 1;
-		panel.add(this.afficherSpectacle(), gbc);
-		gbc.gridy = 2;
-		panel.add(this.afficherSpectacle(), gbc);
-		gbc.gridy = 3;
-		panel.add(this.afficherSpectacle(), gbc);
-
-		
-		panel.setPreferredSize(new Dimension(300 ,400));
-		  
-		this.setContentPane(panel);
-		
-		this.add(scrollPane);
 	}
 	
 	
@@ -154,6 +104,92 @@ public class reservation extends JFrame {
 		
 		return panelSpe;
 	}
+	
+	
+	//Panel de base;
+	public JPanel basePanel() throws DALException
+	{
 		
+		// Creation du panel
+		panel = new JPanel();
+		 
+		panel.setSize(this.getWidth(), this.getHeight());
+		panel.setOpaque(true);
+		
+		// Mise en place Layout
+		panel.setLayout(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		
+		//Espace entre les cases
+		gbc.insets = new Insets(5, 5, 5, 5);
+		
+		//Création du menu
+		this.setJMenuBar(addMenu());
+		
+		// Colonne 1
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		panel.add(this.viewClient(), gbc);
+
+		this.setContentPane(panel);
+		
+		return panel;
+		
+	}
+	
+	//Panel d'affichage des clients
+	public JPanel viewClient() throws DALException
+	{
+		
+		ClientManager clientManager = ClientManager.getInstance() ;
+		
+		List<Client> clients = clientManager.getClients();
+	
+		JPanel panelClients = new JPanel();
+		panelClients.setLayout(new GridBagLayout());
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		//Espace entre les cases
+		gbc.insets = new Insets(5, 5, 5, 5);
+	
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+	
+		for(Client client:clients)
+		{
+			panelClients.add(viewUnClient(client));
+		}
+		
+		return panelClients;
+	}
+	
+	
+
+	//Panel d'affichage d'un client
+	public JPanel viewUnClient(Client client)
+	{
+		JPanel panelClient = new JPanel();
+		panelClient.setLayout(new GridBagLayout());
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		//Espace entre les cases
+		gbc.insets = new Insets(5, 5, 5, 5);
+		
+		// Ligne 1
+		gbc.gridx = 0;
+		
+		gbc.gridy = 0;
+		panelClient.add(new JLabel(client.getNomClient()), gbc);
+		gbc.gridy = 1;
+		panelClient.add(new JLabel(client.getPrenomClient()), gbc);
+		gbc.gridy = 3;
+		panelClient.add(new JLabel(client.getEmailClient()), gbc);
+		
+		
+		return panelClient;
+	}
 	
 }

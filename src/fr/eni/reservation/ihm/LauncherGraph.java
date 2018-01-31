@@ -2,6 +2,8 @@ package fr.eni.reservation.ihm;
 
 import javax.swing.SwingUtilities;
 
+import fr.eni.reservation.dal.DALException;
+
 public class LauncherGraph {
 
 	public static void main(String[] args) {
@@ -9,7 +11,12 @@ public class LauncherGraph {
 			
 			public void run()
 			{
-				ApplyController.getInstance();
+				try {
+					ApplyController.getInstance();
+				} catch (DALException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 	}
