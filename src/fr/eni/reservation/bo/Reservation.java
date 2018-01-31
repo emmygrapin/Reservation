@@ -4,17 +4,15 @@ import java.util.Date;
 
 public class Reservation {
 	private String codeReservation;
-	private String nomReservation;
 	private Client client;
 	private Spectacle spectacle;
 	private int nbPlacesReservation;
 	private Date dateReservation;
 	
-	public Reservation(String codeReservation, String nomReservation, Client client, Spectacle spectacle,
+	public Reservation(String codeReservation, Client client, Spectacle spectacle,
 			int nbPlacesReservation, Date dateReservation) {
 		super();
 		this.codeReservation = codeReservation;
-		this.nomReservation = nomReservation;
 		this.client = client;
 		this.spectacle = spectacle;
 		this.nbPlacesReservation = nbPlacesReservation;
@@ -26,12 +24,7 @@ public class Reservation {
 	public void setCodeReservation(String codeReservation) {
 		this.codeReservation = codeReservation;
 	}
-	public String getNomReservation() {
-		return nomReservation;
-	}
-	public void setNomReservation(String nomReservation) {
-		this.nomReservation = nomReservation;
-	}
+	
 	public Client getClient() {
 		return client;
 	}
@@ -58,7 +51,7 @@ public class Reservation {
 	}
 	@Override
 	public String toString() {
-		return "Reservation [codeReservation=" + codeReservation + ", nomReservation=" + nomReservation + ", client="
+		return "Reservation [codeReservation=" + codeReservation + ", client="
 				+ client + ", spectacle=" + spectacle + ", nbPlacesReservation=" + nbPlacesReservation
 				+ ", dateReservation=" + dateReservation + "]";
 	}
