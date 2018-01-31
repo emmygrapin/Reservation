@@ -1,6 +1,8 @@
 package fr.eni.reservation.bo;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Spectacle {
 	
@@ -10,17 +12,40 @@ public class Spectacle {
 	private String lieu;
 	private Date date;
 	private int placesDispos;
+	private List<Reservation> reservationsSpectacle;
 	
 	public Spectacle(int idSpectacle, String titre, String artiste, String lieu, Date date, int placesDispos) {
-		super();
+		
 		this.idSpectacle = idSpectacle;
 		this.titre = titre;
 		this.artiste = artiste;
 		this.lieu = lieu;
 		this.date = date;
 		this.placesDispos = placesDispos;
+		this.reservationsSpectacle = new ArrayList<Reservation>();
 	}
-
+	
+	public Spectacle(String titre, String artiste, String lieu, Date date, int placesDispos) {
+	
+		this.titre = titre;
+		this.artiste = artiste;
+		this.lieu = lieu;
+		this.date = date;
+		this.placesDispos = placesDispos;
+	}
+	
+	public List<Reservation> getReservations() {
+		return reservationsSpectacle;
+	}
+	
+	public void addReservation(Reservation reservation){
+		reservationsSpectacle.add(reservation);
+	}
+	
+	public void removeReservation(int index){
+		reservationsSpectacle.remove(index);
+	}
+	
 	public int getIdSpectacle() {
 		return idSpectacle;
 	}

@@ -10,9 +10,9 @@ public interface SpectacleDAO {
 	
 	public List<Spectacle> selectAll() throws DALException;
 	
-	public void insert(Spectacle data) throws DALException;
+//	public void insert(Spectacle data) throws DALException;
 	
 	public void update(Spectacle data) throws DALException;
 	
-	public void delete(Spectacle data) throws DALException;
+//	public void delete(Spectacle data) throws DALException;
 }

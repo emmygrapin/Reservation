@@ -3,7 +3,6 @@ package fr.eni.reservation.dal;
 import java.util.List;
 
 import fr.eni.reservation.bo.Client;
-import fr.eni.reservation.bo.Reservation;
 
 public interface ClientDAO {
 
@@ -11,9 +10,7 @@ public interface ClientDAO {
 	
 	public List<Client> selectAll() throws DALException;
 	
-	public void insert(Reservation data) throws DALException;
+	public void insert(Client data) throws DALException;
 	
-	public void update(Reservation data) throws DALException;
-	
-	public void delete(Reservation data) throws DALException;
+	public void delete(int idClient) throws DALException;
 }
