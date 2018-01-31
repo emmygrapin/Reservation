@@ -1,5 +1,7 @@
 package fr.eni.reservation.bo;
 
+import java.util.List;
+
 public class Client {
 	private int idClient;
 	private String nomClient;
@@ -8,10 +10,11 @@ public class Client {
 	private String adresseClient;
 	private String cpClient;
 	private String villeClient;
+	private List<Reservation> reservationsClient;
 	
 	public Client(int idClient, String nomClient, String prenomClient, String emailClient, String adresseClient,
 			String cpClient, String villeClient) {
-		super();
+		
 		this.idClient = idClient;
 		this.nomClient = nomClient;
 		this.prenomClient = prenomClient;
@@ -19,7 +22,24 @@ public class Client {
 		this.adresseClient = adresseClient;
 		this.cpClient = cpClient;
 		this.villeClient = villeClient;
+		
 	}
+	
+	public Client(String nomClient, String prenomClient, String emailClient, String adresseClient,
+			String cpClient, String villeClient) {
+		
+		this.nomClient = nomClient;
+		this.prenomClient = prenomClient;
+		this.emailClient = emailClient;
+		this.adresseClient = adresseClient;
+		this.cpClient = cpClient;
+		this.villeClient = villeClient;
+	}
+	
+	public List<Reservation> getReservations(){
+		return reservationsClient;
+	}
+	
 	public int getIdClient() {
 		return idClient;
 	}
