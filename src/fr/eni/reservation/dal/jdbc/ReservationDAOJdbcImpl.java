@@ -7,13 +7,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Date;
 
 import fr.eni.reservation.JdbcTools;
 import fr.eni.reservation.bo.Reservation;
 import fr.eni.reservation.dal.ClientDAO;
 import fr.eni.reservation.dal.DALException;
 import fr.eni.reservation.dal.DAOFactory;
-//import fr.eni.reservation.dal.Reservation;
 import fr.eni.reservation.dal.ReservationDAO;
 import fr.eni.reservation.dal.SpectacleDAO;
 
