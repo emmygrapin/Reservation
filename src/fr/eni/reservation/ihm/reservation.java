@@ -1,6 +1,7 @@
 package fr.eni.reservation.ihm;
 
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -22,6 +23,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 
@@ -59,6 +61,9 @@ public class reservation extends JFrame {
 	{
 		// Creation du panel
 		panel = new JPanel();
+		
+		JScrollPane scrollPane = new JScrollPane(panel);
+		 
 		panel.setSize(this.getWidth(), this.getHeight());
 		panel.setOpaque(true);
 		
@@ -77,13 +82,19 @@ public class reservation extends JFrame {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		panel.add(this.addLabelWelcome(), gbc);
+		gbc.gridy = 1;
+		panel.add(this.afficherSpectacle(), gbc);
+		gbc.gridy = 2;
+		panel.add(this.afficherSpectacle(), gbc);
+		gbc.gridy = 3;
+		panel.add(this.afficherSpectacle(), gbc);
+
 		
-		//Menu
-		gbc.gridx = 0;
-		gbc.gridy = 8;
-		gbc.gridwidth = 2;
-		
+		panel.setPreferredSize(new Dimension(300 ,400));
+		  
 		this.setContentPane(panel);
+		
+		this.add(scrollPane);
 	}
 	
 	
@@ -125,12 +136,20 @@ public class reservation extends JFrame {
 		gbc.insets = new Insets(5, 5, 5, 5);
 		
 		// Colonne 1
-		gbc.gridx = 0;
 		gbc.gridy = 0;
-		panelSpe.add(new JLabel("Artiste"), gbc);
+		
 		gbc.gridx = 0;
-		gbc.gridy = 0;
 		panelSpe.add(new JLabel("Artiste"), gbc);
+		gbc.gridx = 1;
+		panelSpe.add(new JLabel("Lieu"), gbc);
+		
+		// Colonne 2
+		gbc.gridy = 1;
+		
+		gbc.gridx = 0;
+		panelSpe.add(new JLabel("Spectacle"), gbc);
+		gbc.gridx = 1;
+		panelSpe.add(new JLabel("Date"), gbc);
 		
 		
 		return panelSpe;
