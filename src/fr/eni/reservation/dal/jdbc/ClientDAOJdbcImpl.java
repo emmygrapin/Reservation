@@ -98,8 +98,9 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 				client = new Client(rs.getInt("cli_id"), rs.getString("cli_nom"), rs.getString("cli_prenom"),
 						rs.getString("cli_email"), rs.getString("cli_adresse"), rs.getString("cli_cp"),rs.getString("cli_ville")
 						);
+				
+				clients.add(client);
 			}
-			clients.add(client);
 		}
 		catch(SQLException e){
 			throw new DALException("selectAll failed ", e);
