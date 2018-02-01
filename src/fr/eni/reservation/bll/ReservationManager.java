@@ -2,10 +2,13 @@ package fr.eni.reservation.bll;
 
 import java.util.List;
 
+import fr.eni.reservation.bo.Client;
 import fr.eni.reservation.bo.Reservation;
+import fr.eni.reservation.bo.Spectacle;
 import fr.eni.reservation.dal.DALException;
 import fr.eni.reservation.dal.DAOFactory;
 import fr.eni.reservation.dal.ReservationDAO;
+import fr.eni.reservation.dal.jdbc.ReservationDAOJdbcImpl;
 
 public class ReservationManager {
 	
@@ -27,6 +30,11 @@ public class ReservationManager {
 	}
 	
 	public List<Reservation> getReservations() throws DALException
+	{
+		return daoReservation.selectAll();
+	}
+	
+	public List<Reservation> getClientReservations() throws DALException
 	{
 		return daoReservation.selectAll();
 	}
@@ -58,6 +66,21 @@ public class ReservationManager {
 		}
 		
 	}
+	
+	
+	public void removeClientReservation(Client client) throws DALException
+	{
+		List<Reservation> reservations =  daoReservation.selectByIdClient(client.getIdClient());
+		
+		for(Reservation reservation: reservations)
+		{
+			Spectacle spe = reservation.getSpectacle();
+			spe.setPlacesDispos(spe.getPlacesDispos() + reservation.getNbPlacesReservation());
+			daoReservation.delete(reservation);
+		}
+	}
+	
+
 
 	
 

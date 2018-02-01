@@ -1,6 +1,5 @@
 package fr.eni.reservation.ihm;
 
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -9,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -31,14 +29,16 @@ public class ApplyController {
 	
 	private reservation ecr;
 	private int panel = 0;
-	private JButton annulerButton;
 	
 	
 	private ApplyController() throws DALException
 	{
+	
+		ClientController clientController = ClientController.getinstance();
+		ReservationController reservationController = ReservationController.getinstance();
 		
 		ecr = new reservation();
-		ecr.setContentPane(viewReservations());
+		ecr.setContentPane(reservationController.viewReservations());
 		
 		Container contain = ecr.getContentPane();
 		
@@ -56,153 +56,25 @@ public class ApplyController {
 		return ApplyController.instance;
 	}
 	
-	
-
-	//Panel d'affichage des clients
-	public JPanel viewClient() throws DALException
+	public void move(String menu) throws DALException
 	{
 		
-		ClientManager clientManager = ClientManager.getInstance() ;
+		ClientController clientController = ClientController.getinstance();
+		ReservationController reservationController = ReservationController.getinstance();
 		
-		List<Client> clients = clientManager.getClients();
-	
-		JPanel panelClients = new JPanel();
-		panelClients.setLayout(new GridBagLayout());
-		
-		GridBagConstraints gbc = new GridBagConstraints();
-		
-		//Espace entre les cases
-		gbc.insets = new Insets(5, 5, 5, 5);
-		int y = 0;
-		gbc.gridx = 0;
-	
-		for(Client client:clients)
+		switch(menu)
 		{
-			gbc.gridy = y;
-			panelClients.add(viewUnClient(client), gbc);
-			y++;
+			case "listResa":
+				ecr.setContentPane(reservationController.viewReservations());
+			break;
+			case "listClient":
+				ecr.setContentPane(clientController.viewClient());
+			break;
 		}
 		
-		return panelClients;
+		ecr.validate();
+		ecr.repaint();
 	}
 	
-	
-
-	//Panel d'affichage d'un client
-	public JPanel viewUnClient(Client client)
-	{
-		JPanel panelClient = new JPanel();
-		panelClient.setLayout(new GridBagLayout());
-		
-		GridBagConstraints gbc = new GridBagConstraints();
-		
-		//Espace entre les cases
-		gbc.insets = new Insets(5, 5, 5, 5);
-		
-		// Ligne 1
-		gbc.gridy = 0;
-		
-		gbc.gridx = 0;
-		panelClient.add(new JLabel(client.getNomClient()), gbc);
-		gbc.gridx = 1;
-		panelClient.add(new JLabel(client.getPrenomClient()), gbc);
-		gbc.gridx = 2;
-		panelClient.add(new JLabel(client.getEmailClient()), gbc);
-		
-		
-		return panelClient;
-	}
-	
-	//Panel d'affichage liste de réservations
-	public JPanel viewReservations() throws DALException{
-		ReservationManager reservationManager = ReservationManager.getInstance();
-		List<Reservation> listeReservations = reservationManager.getReservations();
-		
-		JPanel panelReservations = new JPanel();
-	
-		panelReservations.setLayout(new GridBagLayout());
-		
-		
-		GridBagConstraints gbc = new GridBagConstraints();
-	
-		gbc.insets = new Insets(5, 5, 5, 5);
-		gbc.anchor = GridBagConstraints.LINE_START;
-		
-		int y = 1;
-		gbc.gridy = 0;
-		panelReservations.add(new JLabel("Réservations")) ;
-		gbc.gridx = 0;
-		for(Reservation reservation : listeReservations)
-		{
-			gbc.gridy = y;
-			panelReservations.add(viewUneReservation(reservation), gbc);
-			y++;
-		}
-		
-		return panelReservations;
-		
-	}
-	
-	public JPanel viewUneReservation(Reservation reservation){
-		JPanel panelReservation = new JPanel();
-		panelReservation.setSize(ecr.getWidth(), ecr.getHeight());
-		panelReservation.setLayout(new GridBagLayout());
-		
-		GridBagConstraints gbc = new GridBagConstraints();
-		
-		//Espace entre les cases
-		gbc.insets = new Insets(5, 5, 5, 5);
-		gbc.anchor = GridBagConstraints.LINE_START;
-		
-		// Ligne 1
-		gbc.gridy = 0;
-		gbc.gridx = 0;
-		panelReservation.add(new JLabel(reservation.getClient().getNomClient()
-			+ " " 
-			+ reservation.getClient().getPrenomClient()
-			+ " / "
-			+ reservation.getClient().getEmailClient())
-			, gbc);
-		//Ligne 2
-		gbc.gridy = 2;
-		panelReservation.add(new JLabel(reservation.getSpectacle().getTitre()
-				+ " "
-				+ reservation.getSpectacle().getArtiste()
-				+ " / Date de réservation: "
-				+ reservation.getDateReservation()
-				+ " nb de places réservées : "
-				+ String.valueOf(reservation.getNbPlacesReservation())), gbc);
-		
-		//Bouton Annuler
-		gbc.gridx = 2;
-		gbc.gridy = 3;
-		panelReservation.add(addAnnulerButton(reservation), gbc);
-		
-		gbc.gridx = 0;
-		gbc.gridy = 4;
-		panelReservation.setBorder(BorderFactory.createMatteBorder(0,0,1,0,Color.BLACK));
-		return panelReservation;
-	}
-	
-	public JButton addAnnulerButton(Reservation reservation){
-		annulerButton = new JButton("Annuler");
-		annulerButton.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					ReservationManager.getInstance().removeReservation(reservation);
-					Spectacle spectacleReservation = reservation.getSpectacle();
-					spectacleReservation.setPlacesDispos(spectacleReservation.getPlacesDispos() + reservation.getNbPlacesReservation());
-					SpectacleManager.getInstance().updateSpectacle(spectacleReservation);
-					
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
-		return annulerButton;
-	}
 }
 

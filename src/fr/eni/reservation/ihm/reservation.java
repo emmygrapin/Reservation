@@ -4,16 +4,25 @@ import java.awt.Cursor;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 
 import fr.eni.reservation.bll.ClientManager;
+import fr.eni.reservation.bll.ReservationManager;
+import fr.eni.reservation.bll.SpectacleManager;
 import fr.eni.reservation.bo.Client;
+import fr.eni.reservation.bo.Spectacle;
 import fr.eni.reservation.dal.DALException;
 
 
@@ -52,9 +61,53 @@ public class reservation extends JFrame {
 	//Menu
 	private JMenuBar addMenu()
 	{
-		JMenu menu = new JMenu("Accueil");
-		JMenu menu1 = new JMenu("Reservations");
-		JMenu menu2 = new JMenu("Clients");
+		JMenuItem menu = new JMenuItem("Accueil");
+		JMenuItem menu1 = new JMenuItem("Reservations");
+		JMenuItem menu2 = new JMenuItem("Clients");
+				
+		menu.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				try {
+					ApplyController.getInstance().move("listClient");
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		
+		menu1.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				try {
+					ApplyController.getInstance().move("listResa");
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		menu2.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				try {
+					ApplyController.getInstance().move("listClient");
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		
 		
 		this.menuBar= new JMenuBar();
 		this.menuBar.add(menu);

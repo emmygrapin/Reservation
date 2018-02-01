@@ -15,4 +15,6 @@ public interface ReservationDAO {
 	public void update(Reservation data) throws DALException;
 	
 	public void delete(Reservation data) throws DALException;
+	
+	public List<Reservation> selectByIdClient(int data) throws DALException;
 }
