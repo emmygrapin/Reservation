@@ -4,9 +4,12 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.List;
+import java.util.Vector;
 
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import fr.eni.reservation.bll.ClientManager;
 import fr.eni.reservation.bo.Client;
@@ -24,8 +27,12 @@ public class ApplyController {
 	private ApplyController() throws DALException
 	{
 		
+		ReservationController controller = null;
+		controller = ReservationController.getinstance();
+		
 		ecr = new reservation();
-		ecr.setContentPane(viewClient());
+		
+		ecr.setContentPane(controller.NewReservation());
 		
 	}
 	
@@ -94,6 +101,9 @@ public class ApplyController {
 		
 		return panelClient;
 	}
+	
+	
+	
 
 }
 

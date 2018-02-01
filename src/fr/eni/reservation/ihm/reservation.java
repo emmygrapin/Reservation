@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import fr.eni.reservation.bll.ClientManager;
 import fr.eni.reservation.bo.Client;
