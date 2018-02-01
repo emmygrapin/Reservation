@@ -1,28 +1,20 @@
 package fr.eni.reservation.ihm;
 
 import java.awt.Cursor;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Vector;
+import java.util.List;
 
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
+
+import fr.eni.reservation.bll.ClientManager;
+import fr.eni.reservation.bo.Client;
+import fr.eni.reservation.dal.DALException;
 
 
 public class reservation extends JFrame {
@@ -34,7 +26,7 @@ public class reservation extends JFrame {
 	
 	
 	
-	public reservation()
+	public reservation() throws DALException
 	{
 		// Création du conteneur de plus haut niveau		
 		this.setTitle("Reservation");
@@ -49,50 +41,10 @@ public class reservation extends JFrame {
 		// Fermeture de l'application JAVA lorsque on clique sur la croix
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		this.setupIHM();
+		this.setJMenuBar(addMenu());
 		
 		// J'affiche la fenêtre
 		this.setVisible(true);
-	}
-	
-	private void setupIHM()
-	{
-		// Creation du panel
-		panel = new JPanel();
-		panel.setSize(this.getWidth(), this.getHeight());
-		panel.setOpaque(true);
-		
-		// Mise en place Layout
-		panel.setLayout(new GridBagLayout());
-		GridBagConstraints gbc = new GridBagConstraints();
-		
-		
-		//Espace entre les cases
-		gbc.insets = new Insets(5, 5, 5, 5);
-		
-		//Création du menu
-		this.setJMenuBar(addMenu());
-		
-		// Colonne 1
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		panel.add(this.addLabelWelcome(), gbc);
-		
-		//Menu
-		gbc.gridx = 0;
-		gbc.gridy = 8;
-		gbc.gridwidth = 2;
-		
-		this.setContentPane(panel);
-	}
-	
-	
-	
-	
-	//Labels	
-	private JLabel addLabelWelcome(){
-		this.labelWelcome = new JLabel("Bienvenue");
-		return this.labelWelcome;
 	}
 	
 	
@@ -111,30 +63,5 @@ public class reservation extends JFrame {
 		
 		return this.menuBar;
 	}
-	
-	
-	//Spectacle	
-	private JPanel afficherSpectacle(){
-		
-		JPanel panelSpe = new JPanel();
-		panelSpe.setLayout(new GridBagLayout());
-		
-		GridBagConstraints gbc = new GridBagConstraints();
-		
-		//Espace entre les cases
-		gbc.insets = new Insets(5, 5, 5, 5);
-		
-		// Colonne 1
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		panelSpe.add(new JLabel("Artiste"), gbc);
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		panelSpe.add(new JLabel("Artiste"), gbc);
-		
-		
-		return panelSpe;
-	}
-		
 	
 }

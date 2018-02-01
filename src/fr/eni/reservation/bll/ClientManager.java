@@ -3,6 +3,7 @@ package fr.eni.reservation.bll;
 import java.util.List;
 
 import fr.eni.reservation.bo.Client;
+import fr.eni.reservation.bo.Spectacle;
 import fr.eni.reservation.dal.ClientDAO;
 import fr.eni.reservation.dal.DALException;
 import fr.eni.reservation.dal.DAOFactory;
@@ -32,7 +33,6 @@ public class ClientManager {
 	public Client getClient(int idClient) throws DALException{
 		return daoClient.selectById(idClient);
 	}
-	
 	public void addClient(Client client) throws DALException 
 	{
 		daoClient.insert(client);
