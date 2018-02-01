@@ -125,7 +125,7 @@ public class ReservationDAOJdbcImpl implements ReservationDAO {
 
 			while (rs.next()) {
 				
-				reserv = new Reservation(rs.getString("res_code-reservation"),             // res_code_reservation    
+				reserv = new Reservation(rs.getString("res_code_reservation"),             // res_code_reservation    
 										 clientDAO.selectById(rs.getInt("res_client")),    // res_client
 										 spectacleDAO.selectById(rs.getInt("res_spe_id")), // res_spe_id 
 										 rs.getInt("res_nb_places"),                       // res_nb_places 
