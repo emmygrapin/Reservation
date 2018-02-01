@@ -16,7 +16,7 @@ import fr.eni.reservation.dal.SpectacleDAO;
 public class SpectacleDAOJdbcImpl implements SpectacleDAO {
 	
 	private static final String sqlSelectById = "select spe_id, spe_titre, spe_artiste, spe_lieu, spe_date, spe_places_dispos"
-			+ " from client where spe_id = ?";
+			+ " from spectacle where spe_id = ?";
 	private static final String sqlSelectAll = "select spe_id, spe_titre, spe_artiste, spe_lieu, spe_date, spe_places_dispos"
 			+ " from spectacle";
 	private static final String sqlUpdate = "update spectacle set spe_places_dispos=? where spe_id=?";

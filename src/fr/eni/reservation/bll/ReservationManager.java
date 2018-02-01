@@ -26,7 +26,7 @@ public class ReservationManager {
 		return _instance;		
 	}
 	
-	public List<Reservation> getReservation() throws DALException
+	public List<Reservation> getReservations() throws DALException
 	{
 		return daoReservation.selectAll();
 	}
