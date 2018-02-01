@@ -38,9 +38,9 @@ public class ReservationManager {
 		
 	}
 	
-	public void removeReservation(Reservation reservation)
+	public void removeReservation(Reservation reservation) throws DALException
 	{
-		daoReservation.delete(reservation.getCodeReservation());
+		daoReservation.delete(reservation);
 	}
 	
 	public void validerReservation(Reservation reservation) throws Exception
@@ -58,11 +58,7 @@ public class ReservationManager {
 		}
 		
 	}
-	
-	public List<Reservation> getClientReservation(int index)
-	{
-		return daoReservation.selectByIdClient(index);
-	}
+
 	
 
 }
