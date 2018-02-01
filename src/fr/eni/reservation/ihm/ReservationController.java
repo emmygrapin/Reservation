@@ -6,11 +6,10 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Vector;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -239,5 +238,88 @@ public class ReservationController {
         return pass.toString();
 	}
 	
+	
+	
+	//Panel d'affichage liste de réservations
+	public JPanel viewReservations() throws DALException{
+		ReservationManager reservationManager = ReservationManager.getInstance();
+		List<Reservation> listeReservations = reservationManager.getReservations();
+		
+		JPanel panelReservations = new JPanel();
+		panelReservations.setLayout(new GridBagLayout());
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		gbc.insets = new Insets(5, 5, 5, 5);
+		int y = 1;
+		gbc.gridy = 0;
+		panelReservations.add(new JLabel("Réservations")) ;
+		gbc.gridx = 0;
+		for(Reservation reservation : listeReservations)
+		{
+			gbc.gridy = y;
+			panelReservations.add(viewUneReservation(reservation), gbc);
+			y++;
+		}
+		
+		return panelReservations;
+		
+	}
+	
+	public JPanel viewUneReservation(Reservation reservation){
+		JPanel panelReservation = new JPanel();
+		panelReservation.setLayout(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		//Espace entre les cases
+		gbc.insets = new Insets(5, 5, 5, 5);
+		//Alignement à gauche
+		gbc.anchor = GridBagConstraints.LINE_START;
+		
+		// Ligne 1
+		gbc.gridy = 0;
+		gbc.gridx = 0;
+		panelReservation.add(new JLabel(reservation.getClient().getNomClient()
+			+ " " 
+			+ reservation.getClient().getPrenomClient()
+			+ " / "
+			+ reservation.getClient().getEmailClient())
+			, gbc);
+		//Ligne 2
+		gbc.gridy = 2;
+		panelReservation.add(new JLabel(reservation.getSpectacle().getTitre()
+				+ " "
+				+ reservation.getSpectacle().getArtiste()
+				+ " / Date de réservation: "
+				+ reservation.getDateReservation()
+				+ " nb de places réservées : "
+				+ String.valueOf(reservation.getNbPlacesReservation())), gbc);
+		//Bouton Annuler
+		gbc.gridx = 2;
+		panelReservation.add(addAnnulerButton(reservation), gbc);
+		
+		return panelReservation;
+	}
+	
+	public JButton addAnnulerButton(Reservation reservation){
+		JButton annulerButton = new JButton("Annuler");
+		annulerButton.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ReservationManager.getInstance().removeReservation(reservation);
+					Spectacle spectacleReservation = reservation.getSpectacle();
+					spectacleReservation.setPlacesDispos(spectacleReservation.getPlacesDispos() + reservation.getNbPlacesReservation());
+					SpectacleManager.getInstance().updateSpectacle(spectacleReservation);
+					
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		return annulerButton;
+	}
 	
 }

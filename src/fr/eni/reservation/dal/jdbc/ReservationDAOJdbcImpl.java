@@ -25,7 +25,7 @@ public class ReservationDAOJdbcImpl implements ReservationDAO {
 	private static final String sqlInsert = "insert into RESERVATIONS(res_code_reservation, res_spe_id, res_nb_places, res_date_reservation, res_client) values(?,?,?,?,?)";
 	private static final String sqlUpdate = "update RESERVATIONS set res_spe_id=?, res_nb_places=?,res_date_reservation=?,res_client=? where res_code_reservation=?";
 	private static final String sqlDelete = "delete from RESERVATIONS where res_code_reservation=?";
-	private static final String sqlSelectbyIdClient = "res_code_reservation, res_spe_id, res_nb_places, res_date_reservation, res_client from RESERVATIONS where res_client = ?";
+	private static final String sqlSelectbyIdClient = "select res_code_reservation, res_spe_id, res_nb_places, res_date_reservation, res_client from RESERVATIONS where res_client = ?";
 	private static final String sqlSelectByIdSpectacle = "res_code_reservation, res_spe_id, res_nb_places, res_date_reservation, res_client from RESERVATIONS where res_spe_id = ?";
 
 	private Connection cnx;
@@ -240,7 +240,7 @@ public class ReservationDAOJdbcImpl implements ReservationDAO {
 				liste.add(reserv);
 			}
 		} catch (SQLException e) {
-			throw new DALException("selectByMarque failed - ", e);
+			throw new DALException("selectByIdClient failed - ", e);
 		} finally {
 			try {
 				if (rqt != null) {
