@@ -3,6 +3,9 @@ package fr.eni.reservation.bll;
 import java.util.List;
 
 import fr.eni.reservation.bo.Reservation;
+import fr.eni.reservation.dal.DALException;
+import fr.eni.reservation.dal.DAOFactory;
+import fr.eni.reservation.dal.ReservationDAO;
 
 public class ReservationManager {
 	
@@ -23,12 +26,12 @@ public class ReservationManager {
 		return _instance;		
 	}
 	
-	public List<Reservation> getReservation()
+	public List<Reservation> getReservation() throws DALException
 	{
 		return daoReservation.selectAll();
 	}
 	
-	public void addReservation(Reservation reservation) 
+	public void addReservation(Reservation reservation) throws Exception 
 	{
 		validerReservation(reservation);
 		daoReservation.insert(reservation);
@@ -40,7 +43,7 @@ public class ReservationManager {
 		daoReservation.delete(reservation.getCodeReservation());
 	}
 	
-	public void validerReservation(Reservation reservation)
+	public void validerReservation(Reservation reservation) throws Exception
 	{
 		String error = "";
 		

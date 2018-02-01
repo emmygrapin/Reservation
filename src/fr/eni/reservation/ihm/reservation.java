@@ -41,19 +41,10 @@ public class reservation extends JFrame {
 		// Fermeture de l'application JAVA lorsque on clique sur la croix
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		this.basePanel();
+		this.setJMenuBar(addMenu());
 		
 		// J'affiche la fenêtre
 		this.setVisible(true);
-	}
-	
-	
-	
-	
-	//Labels	
-	private JLabel addLabelWelcome(){
-		this.labelWelcome = new JLabel("Bienvenue");
-		return this.labelWelcome;
 	}
 	
 	
@@ -71,125 +62,6 @@ public class reservation extends JFrame {
 		this.menuBar.add(menu2);
 		
 		return this.menuBar;
-	}
-	
-	
-	//Spectacle	
-	private JPanel afficherSpectacle(){
-		
-		JPanel panelSpe = new JPanel();
-		panelSpe.setLayout(new GridBagLayout());
-		
-		GridBagConstraints gbc = new GridBagConstraints();
-		
-		//Espace entre les cases
-		gbc.insets = new Insets(5, 5, 5, 5);
-		
-		// Colonne 1
-		gbc.gridy = 0;
-		
-		gbc.gridx = 0;
-		panelSpe.add(new JLabel("Artiste"), gbc);
-		gbc.gridx = 1;
-		panelSpe.add(new JLabel("Lieu"), gbc);
-		
-		// Colonne 2
-		gbc.gridy = 1;
-		
-		gbc.gridx = 0;
-		panelSpe.add(new JLabel("Spectacle"), gbc);
-		gbc.gridx = 1;
-		panelSpe.add(new JLabel("Date"), gbc);
-		
-		
-		return panelSpe;
-	}
-	
-	
-	//Panel de base;
-	public JPanel basePanel() throws DALException
-	{
-		
-		// Creation du panel
-		panel = new JPanel();
-		 
-		panel.setSize(this.getWidth(), this.getHeight());
-		panel.setOpaque(true);
-		
-		// Mise en place Layout
-		panel.setLayout(new GridBagLayout());
-		GridBagConstraints gbc = new GridBagConstraints();
-		
-		
-		//Espace entre les cases
-		gbc.insets = new Insets(5, 5, 5, 5);
-		
-		//Création du menu
-		this.setJMenuBar(addMenu());
-		
-		// Colonne 1
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		panel.add(this.viewClient(), gbc);
-
-		this.setContentPane(panel);
-		
-		return panel;
-		
-	}
-	
-	//Panel d'affichage des clients
-	public JPanel viewClient() throws DALException
-	{
-		
-		ClientManager clientManager = ClientManager.getInstance() ;
-		
-		List<Client> clients = clientManager.getClients();
-	
-		JPanel panelClients = new JPanel();
-		panelClients.setLayout(new GridBagLayout());
-		
-		GridBagConstraints gbc = new GridBagConstraints();
-		
-		//Espace entre les cases
-		gbc.insets = new Insets(5, 5, 5, 5);
-	
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-	
-		for(Client client:clients)
-		{
-			panelClients.add(viewUnClient(client));
-		}
-		
-		return panelClients;
-	}
-	
-	
-
-	//Panel d'affichage d'un client
-	public JPanel viewUnClient(Client client)
-	{
-		JPanel panelClient = new JPanel();
-		panelClient.setLayout(new GridBagLayout());
-		
-		GridBagConstraints gbc = new GridBagConstraints();
-		
-		//Espace entre les cases
-		gbc.insets = new Insets(5, 5, 5, 5);
-		
-		// Ligne 1
-		gbc.gridx = 0;
-		
-		gbc.gridy = 0;
-		panelClient.add(new JLabel(client.getNomClient()), gbc);
-		gbc.gridy = 1;
-		panelClient.add(new JLabel(client.getPrenomClient()), gbc);
-		gbc.gridy = 3;
-		panelClient.add(new JLabel(client.getEmailClient()), gbc);
-		
-		
-		return panelClient;
 	}
 	
 }

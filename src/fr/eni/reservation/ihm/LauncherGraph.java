@@ -14,7 +14,6 @@ public class LauncherGraph {
 				try {
 					ApplyController.getInstance();
 				} catch (DALException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
