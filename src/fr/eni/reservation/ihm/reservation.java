@@ -33,7 +33,7 @@ public class reservation extends JFrame {
 		this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		
 		// Réglage de la taille du conteneur
-		this.setSize(640, 480);
+		this.setSize(600, 600);
 		
 		// Réglage de la position du conteneur
 		this.setLocationRelativeTo(null);

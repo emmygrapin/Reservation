@@ -1,6 +1,7 @@
 package fr.eni.reservation.ihm;
 
 import java.awt.Container;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -8,18 +9,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 import fr.eni.reservation.bll.ClientManager;
 import fr.eni.reservation.bll.ReservationManager;
 import fr.eni.reservation.bll.SpectacleManager;
 import fr.eni.reservation.bo.Client;
 import fr.eni.reservation.bo.Reservation;
+
 import fr.eni.reservation.bo.Spectacle;
 import fr.eni.reservation.dal.DALException;
 
@@ -36,13 +40,13 @@ public class ApplyController {
 	{
 		
 		ecr = new reservation();
-		ecr.setContentPane(viewReservations());
+		//ecr.setContentPane(viewReservations());
+		ecr.setContentPane(viewSpectacle());
 		
 		Container contain = ecr.getContentPane();
 		
 		JScrollPane scroll = new JScrollPane(contain);
-		ecr.setContentPane(scroll);
-		
+		ecr.setContentPane(scroll);	
 	}
 	
 	public static ApplyController getInstance() throws DALException
@@ -111,6 +115,7 @@ public class ApplyController {
 		return panelClient;
 	}
 	
+
 	//Panel d'affichage liste de réservations
 	public JPanel viewReservations() throws DALException{
 		ReservationManager reservationManager = ReservationManager.getInstance();
@@ -122,6 +127,7 @@ public class ApplyController {
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		gbc.insets = new Insets(5, 5, 5, 5);
+
 		int y = 1;
 		gbc.gridy = 0;
 		panelReservations.add(new JLabel("Réservations")) ;
@@ -175,7 +181,7 @@ public class ApplyController {
 	public JButton addAnnulerButton(Reservation reservation){
 		annulerButton = new JButton("Annuler");
 		annulerButton.addActionListener(new ActionListener(){
-
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -192,5 +198,79 @@ public class ApplyController {
 		});
 		return annulerButton;
 	}
+
+		
+//Panel d'affichage des spectacles
+	public JPanel viewSpectacle() throws DALException
+	{
+		
+		SpectacleManager spectacleManager = SpectacleManager.getInstance();
+		
+		List<Spectacle> spectacles = spectacleManager.getSpectacles();
+		
+		JPanel panelSpectacles = new JPanel();
+		panelSpectacles.setSize(this.ecr.getWidth(), this.ecr.getHeight());
+		panelSpectacles.setLayout(new GridBagLayout());
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		gbc.insets = new Insets(5, 5, 5, 5);
+
+		gbc.gridy = 0;
+		panelSpectacles.add(new JLabel("Liste des Spectacles"), gbc);
+		
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		panelSpectacles.add(new JLabel("Recherche par Artiste : "),gbc);
+		gbc.gridx = 1;
+		panelSpectacles.add(new JTextField(20), gbc);
+		gbc.gridx = 2;
+		panelSpectacles.add(new JButton("OK"), gbc);		
+		int y = 2;
+				
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		gbc.gridwidth = 3;
+		for(Spectacle spectacle : spectacles)
+		{
+			
+			gbc.gridy = y;
+			panelSpectacles.add(viewUnSpectacle(spectacle), gbc);
+			y++;
+		}
+		
+		return panelSpectacles;
+		
+	}
+	
+	public JPanel viewUnSpectacle(Spectacle spectacle) throws DALException
+	{
+		JPanel panelSpectacle = new JPanel();
+		panelSpectacle.setLayout(new GridBagLayout());
+		panelSpectacle.setSize(600, 600);
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		gbc.insets = new Insets(5, 5, 5, 5);
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		
+		panelSpectacle.add(new JLabel(spectacle.getArtiste() + ", " + spectacle.getTitre()), gbc);
+		gbc.gridy = 1;
+		panelSpectacle.add(new JLabel(spectacle.getLieu() + " / " + spectacle.getDate()), gbc);
+		gbc.gridx = 1;
+		gbc.anchor = GridBagConstraints.EAST;
+		JButton dispo = new JButton("Réservations");
+		dispo.setBackground(new Color(10, 200, 50));
+		dispo.setForeground(new Color(255, 255, 255));
+		panelSpectacle.add(dispo, gbc);
+		panelSpectacle.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+		
+		return panelSpectacle;
+	}
+	
+	
+
 }
 
