@@ -6,6 +6,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Vector;
@@ -29,6 +30,7 @@ public class ReservationController {
 	private JTextField txtNom, txtPrenom, txtAdresse, txtEmail, txtVille, txtCP;
 	private JButton btnValider;
 	private JComboBox cbxPlaces;
+	private JPanel panelReservations;
 	
 	private static ReservationController _instance;
 	
@@ -202,7 +204,6 @@ public class ReservationController {
 	}
 	
 	
-	
 	public Client newClient() throws DALException
 	{
 		ClientManager clientManager = ClientManager.getInstance();
@@ -318,7 +319,10 @@ public class ReservationController {
 					ReservationManager.getInstance().removeReservation(reservation);
 					Spectacle spectacleReservation = reservation.getSpectacle();
 					spectacleReservation.setPlacesDispos(spectacleReservation.getPlacesDispos() + reservation.getNbPlacesReservation());
+					
 					SpectacleManager.getInstance().updateSpectacle(spectacleReservation);
+					ApplyController.getInstance().move("listResa", new ArrayList<>());
+					ApplyController.getInstance().message("annulationConfirm");
 					
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -326,7 +330,6 @@ public class ReservationController {
 				}
 			}
 		});
-		return annulerButton;
+		return annulerButton;	
 	}
-	
 }
