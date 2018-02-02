@@ -1,10 +1,12 @@
 package fr.eni.reservation.ihm;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -81,6 +83,10 @@ private static ClientController _instance;
 		
 		//Espace entre les cases
 		gbc.insets = new Insets(5, 5, 5, 5);
+		//Alignement à gauche
+		gbc.anchor = GridBagConstraints.LINE_START;
+		
+		
 		
 		// Ligne 1
 		gbc.gridy = 0;
@@ -108,7 +114,7 @@ private static ClientController _instance;
 				try {
 					ReservationManager.getInstance().removeClientReservation(client);
 					ClientManager.getInstance().removeClient(client);
-					ApplyController.getInstance().move("listClient");
+					ApplyController.getInstance().move("listClient", new ArrayList<>());
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
