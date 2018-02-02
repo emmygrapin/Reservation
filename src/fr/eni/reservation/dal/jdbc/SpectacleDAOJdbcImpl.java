@@ -136,16 +136,5 @@ public class SpectacleDAOJdbcImpl implements SpectacleDAO {
 			closeConnection();
 		}
 	};
-//	@Override
-//	public void insert(Spectacle data) throws DALException {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	@Override
-//	public void delete(Spectacle data) throws DALException {
-//		// TODO Auto-generated method stub
-//		
-//	}
 
 }
