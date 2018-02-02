@@ -1,10 +1,21 @@
 package fr.eni.reservation.ihm;
 
+import java.awt.Color;
 import java.awt.Container;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+
 import javax.swing.JScrollPane;
 
 import fr.eni.reservation.bo.Spectacle;
@@ -27,7 +38,7 @@ public class ApplyController {
 		
 		ecr = new reservation();
 		//ecr.setContentPane(reservationController.viewReservations());
-		ecr.setContentPane(spectacleController.viewSpectacle());
+		ecr.setContentPane(spectacleController.viewSpectacle(new ArrayList()));
 		
 		Container contain = ecr.getContentPane();
 		
@@ -57,7 +68,7 @@ public class ApplyController {
 
 		{
 		 	case "listSpec":
-		 		ecr.setContentPane(spectacleController.viewSpectacle());
+		 		ecr.setContentPane(spectacleController.viewSpectacle(liste));
 			break;
 			case "listResa":
 				ecr.setContentPane(reservationController.viewReservations());
@@ -69,12 +80,6 @@ public class ApplyController {
 				ecr.setContentPane(reservationController.NewReservation((Spectacle) liste.get(0)));
 			break;
 		}
-		
-		
-		Container contain = ecr.getContentPane();
-		
-		JScrollPane scroll = new JScrollPane(contain);
-		ecr.setContentPane(scroll);	
 		
 		ecr.validate();
 		ecr.repaint();
@@ -99,8 +104,6 @@ public class ApplyController {
 		}
 		ecr.addDialog(message, icon);
 	}
-	
-	
 
 }
 

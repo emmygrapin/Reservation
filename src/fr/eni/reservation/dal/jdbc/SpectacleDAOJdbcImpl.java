@@ -21,6 +21,8 @@ public class SpectacleDAOJdbcImpl implements SpectacleDAO {
 			+ " from spectacle";
 	private static final String sqlUpdate = "update spectacle set spe_places_dispos=? where spe_id=?";
 //private static final String sqlDelete = "delete from spectacle where spe_id = ?";
+	private static final String sqlSelectByArtiste = "select spe_id, spe_titre, spe_artiste, spe_lieu, spe_date, spe_places_dispos "
+			+ "from spectacle where spe_artiste like ? ";
 	
 	private Connection connection;
 	
@@ -96,7 +98,6 @@ public class SpectacleDAOJdbcImpl implements SpectacleDAO {
 						rs.getString("spe_lieu"), rs.getDate("spe_date"), rs.getInt("spe_places_dispos"));
 				spectacles.add(spectacle);
 			}
-		
 		}
 		catch(SQLException e){
 			throw new DALException("selectAll failed ", e);
@@ -135,6 +136,41 @@ public class SpectacleDAOJdbcImpl implements SpectacleDAO {
 			}
 			closeConnection();
 		}
-	};
+	}
+	
+	public List<Spectacle> selectByArtiste(String artiste) throws DALException
+	{
+		Connection cnx = null;
+		PreparedStatement rqt = null;
+		ResultSet rs = null;
+		List<Spectacle> spectacles = new ArrayList<>();
+		try {
+			cnx = getConnection();
+			rqt = cnx.prepareStatement(sqlSelectByArtiste);
+			rqt.setString(1, "%" + artiste + "%");
+			rs = rqt.executeQuery();
+			Spectacle spectacle = null;
+			while (rs.next()) {
+				
+				spectacle = new Spectacle(rs.getInt("spe_id"), rs.getString("spe_titre"), rs.getString("spe_artiste"),
+							rs.getString("spe_lieu"), rs.getDate("spe_date"), rs.getInt("spe_places_dispos"));
+				spectacles.add(spectacle);
+			}
+		} catch (SQLException e) {
+			throw new DALException("selectByArtiste failed - " + artiste, e);
+		} finally {
+			try {
+				
+				if (rqt != null) {
+					rqt.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			closeConnection();
+		}
+		return spectacles;
+		
+	}
 
 }

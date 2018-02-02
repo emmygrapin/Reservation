@@ -51,5 +51,10 @@ public class SpectacleManager {
 //		daoSpectacle.delete(spectacle.getIdSpectacle());
 //	}
 	
+	public List<Spectacle> getSpectacleDUnArtiste(String artiste) throws DALException
+	{
+		return daoSpectacle.selectByArtiste(artiste);
+		
+	}
 	
 }
