@@ -1,28 +1,15 @@
 package fr.eni.reservation.ihm;
 
 import java.awt.Cursor;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 
-import fr.eni.reservation.bll.ClientManager;
-import fr.eni.reservation.bll.ReservationManager;
-import fr.eni.reservation.bll.SpectacleManager;
-import fr.eni.reservation.bo.Client;
-import fr.eni.reservation.bo.Spectacle;
 import fr.eni.reservation.dal.DALException;
 
 
@@ -42,7 +29,7 @@ public class reservation extends JFrame {
 		this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		
 		// Réglage de la taille du conteneur
-		this.setSize(640, 480);
+		this.setSize(600, 600);
 		
 		// Réglage de la position du conteneur
 		this.setLocationRelativeTo(null);
@@ -71,7 +58,7 @@ public class reservation extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				try {
-					ApplyController.getInstance().move("listClient");
+					ApplyController.getInstance().move("listSpec");
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

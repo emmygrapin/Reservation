@@ -94,8 +94,9 @@ public class SpectacleDAOJdbcImpl implements SpectacleDAO {
 			while (rs.next()){
 				spectacle = new Spectacle(rs.getInt("spe_id"), rs.getString("spe_titre"), rs.getString("spe_artiste"),
 						rs.getString("spe_lieu"), rs.getDate("spe_date"), rs.getInt("spe_places_dispos"));
+				spectacles.add(spectacle);
 			}
-			spectacles.add(spectacle);
+		
 		}
 		catch(SQLException e){
 			throw new DALException("selectAll failed ", e);
