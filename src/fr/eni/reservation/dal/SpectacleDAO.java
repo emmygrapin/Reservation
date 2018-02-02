@@ -15,4 +15,7 @@ public interface SpectacleDAO {
 	public void update(Spectacle data) throws DALException;
 	
 //	public void delete(Spectacle data) throws DALException;
+	
+	public List<Spectacle> selectByArtiste(String artiste) throws DALException;
 }
+

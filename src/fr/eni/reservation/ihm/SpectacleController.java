@@ -21,7 +21,7 @@ import fr.eni.reservation.dal.DALException;
 
 public class SpectacleController {
 	
-	private JTextField fieldArtiste;
+	private JTextField txtArtiste;
 
 	private JButton btnSearchArtiste;
 	private JButton btnReservation;
@@ -44,12 +44,14 @@ public class SpectacleController {
 	}
 	
 	//Panel d'affichage des spectacles 
-		public JPanel viewSpectacle() throws DALException
+		public JPanel viewSpectacle(List<Spectacle> spectacles) throws DALException
 		{
+			if (spectacles.size() == 0) {
+				SpectacleManager spectacleManager = SpectacleManager.getInstance();
+				spectacles = spectacleManager.getSpectacles();
+				System.out.println("test");
+			} 
 			
-			SpectacleManager spectacleManager = SpectacleManager.getInstance();
-			
-			List<Spectacle> spectacles = spectacleManager.getSpectacles();
 			
 			
 			JPanel panelSpectacles = new JPanel();
@@ -67,7 +69,7 @@ public class SpectacleController {
 			gbc.gridy = 1;
 			panelSpectacles.add(new JLabel("Recherche par Artiste : "),gbc);
 			gbc.gridx = 1;
-			panelSpectacles.add(this.getFieldSearchArtiste(), gbc);
+			panelSpectacles.add(this.addFieldSearchArtiste(), gbc);
 			gbc.gridx = 2;
 			panelSpectacles.add(this.getBtnSearchArtiste(), gbc);		
 			int y = 2;
@@ -105,6 +107,7 @@ public class SpectacleController {
 			panelSpectacle.add(new JLabel(spectacle.getLieu() + " / " + spectacle.getDate()), gbc);
 			gbc.gridx = 1;
 			gbc.anchor = GridBagConstraints.EAST;
+			
 			
 			panelSpectacle.add(this.getBtnReservation(spectacle), gbc);
 			panelSpectacle.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
@@ -144,23 +147,13 @@ public class SpectacleController {
 			
 		}
 		
-		public JTextField getFieldSearchArtiste()
+		public JTextField addFieldSearchArtiste()
 		{
 		
-			if (fieldArtiste == null) {
-				fieldArtiste = new JTextField(20);
-				fieldArtiste.addActionListener(new ActionListener() {
-					
-				
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-						System.out.println("test");
-					}
-				});
+			if (this.txtArtiste == null) {
+				this.txtArtiste = new JTextField(20);
 			}
-			return fieldArtiste;
-			
+			return txtArtiste;
 		}
 		
 		public JButton getBtnSearchArtiste() 
@@ -171,9 +164,21 @@ public class SpectacleController {
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
 						
-					}
+							try {
+								//stockage de valeur du champ "recherche par artiste"
+								String artiste = txtArtiste.getText();
+								// liste d'artistes
+								List<Spectacle> listeArtistes = SpectacleManager.getInstance().getSpectacleDUnArtiste(artiste);
+								System.out.println(listeArtistes.size());
+								ApplyController.getInstance().move("listSpec", listeArtistes);
+							} catch (DALException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+							}
+					
+							
+						}
 				});
 			}
 			return btnSearchArtiste;

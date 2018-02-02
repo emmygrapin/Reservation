@@ -2,6 +2,7 @@ package fr.eni.reservation.ihm;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -33,7 +34,7 @@ public class ApplyController {
 		
 		ecr = new reservation();
 		//ecr.setContentPane(reservationController.viewReservations());
-		ecr.setContentPane(spectacleController.viewSpectacle());
+		ecr.setContentPane(spectacleController.viewSpectacle(new ArrayList()));
 		
 		Container contain = ecr.getContentPane();
 		
@@ -62,7 +63,7 @@ public class ApplyController {
 
 		{
 		 	case "listSpec":
-		 		ecr.setContentPane(spectacleController.viewSpectacle());
+		 		ecr.setContentPane(spectacleController.viewSpectacle(liste));
 			break;
 			case "listResa":
 				ecr.setContentPane(reservationController.viewReservations());
