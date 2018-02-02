@@ -1,5 +1,6 @@
 package fr.eni.reservation.ihm;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -8,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -62,6 +64,7 @@ public class ApplyController {
 		ClientController clientController = ClientController.getinstance();
 		ReservationController reservationController = ReservationController.getinstance();
 		
+
 		switch(menu)
 		{
 			case "listResa":
@@ -74,6 +77,7 @@ public class ApplyController {
 		
 		ecr.validate();
 		ecr.repaint();
+		
 	}
 	
 }
