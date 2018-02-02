@@ -5,7 +5,6 @@ import java.awt.Container;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,8 +12,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 
+
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
 import javax.swing.JScrollPane;
 
+import fr.eni.reservation.bo.Spectacle;
 import fr.eni.reservation.dal.DALException;
 
 public class ApplyController {
@@ -40,6 +44,7 @@ public class ApplyController {
 		
 		JScrollPane scroll = new JScrollPane(contain);
 		ecr.setContentPane(scroll);	
+		
 	}
 	
 	public static ApplyController getInstance() throws DALException
@@ -71,11 +76,33 @@ public class ApplyController {
 			case "listClient":
 				ecr.setContentPane(clientController.viewClient());
 			break;
+			case "newResa":
+				ecr.setContentPane(reservationController.NewReservation((Spectacle) liste.get(0)));
+			break;
 		}
 		
 		ecr.validate();
 		ecr.repaint();
-		
+	}
+	
+	public void message(String dialog){
+		String message = null;
+		int icon = 0;
+		switch(dialog){
+			case "annulationConfirm":
+				message = "votre annulation de réservation est confirmée";
+				icon = JOptionPane.WARNING_MESSAGE;
+			break;
+			case "requiredFields":
+				message = "tous les champs sont requis";
+				icon = JOptionPane.ERROR_MESSAGE;
+			break;
+			case "noAvailablePlaces":
+				message = "il n'y a pas assez de places disponibles";
+				icon = JOptionPane.WARNING_MESSAGE;
+			break;
+		}
+		ecr.addDialog(message, icon);
 	}
 
 }

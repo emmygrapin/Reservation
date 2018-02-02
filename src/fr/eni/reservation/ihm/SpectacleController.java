@@ -129,7 +129,7 @@ public class SpectacleController {
 						List<Spectacle> listeSpectacle = new ArrayList<>();
 						listeSpectacle.add(spectacle);
 						try {
-							ApplyController.getInstance().move("listSpec", listeSpectacle );
+							ApplyController.getInstance().move("newResa", listeSpectacle );
 						} catch (DALException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();

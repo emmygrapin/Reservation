@@ -3,11 +3,16 @@ package fr.eni.reservation.ihm;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import fr.eni.reservation.dal.DALException;
@@ -18,7 +23,7 @@ public class reservation extends JFrame {
 	private JPanel panel;
 	private JLabel labelWelcome;
 	private JMenuBar menuBar;
-	
+	private JDialog addDialog;
 	
 	
 	
@@ -58,7 +63,7 @@ public class reservation extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				try {
-					ApplyController.getInstance().move("listSpec");
+					ApplyController.getInstance().move("listSpec", new ArrayList<>());
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -73,7 +78,7 @@ public class reservation extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				try {
-					ApplyController.getInstance().move("listResa");
+					ApplyController.getInstance().move("listResa", new ArrayList<>());
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -87,7 +92,7 @@ public class reservation extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				try {
-					ApplyController.getInstance().move("listClient");
+					ApplyController.getInstance().move("listClient", new ArrayList<>());
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -104,4 +109,27 @@ public class reservation extends JFrame {
 		return this.menuBar;
 	}
 	
+	public void addDialog(String message, int icon ){
+		JDialog boiteDialog = new JDialog(this,"Dialog", false);
+		JOptionPane optionPane = new JOptionPane(message,icon);
+		
+		boiteDialog.setContentPane(optionPane);
+		boiteDialog.setSize(300, 150);
+		boiteDialog.setResizable(false);
+		boiteDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		boiteDialog.setVisible(true);
+		optionPane.addPropertyChangeListener(
+			    new PropertyChangeListener() {
+			        public void propertyChange(PropertyChangeEvent e) {
+			            String prop = e.getPropertyName();
+			            if (boiteDialog.isVisible() 
+			             && (e.getSource() == optionPane)
+			             && (prop.equals(JOptionPane.VALUE_PROPERTY))) {
+			               
+			                boiteDialog.setVisible(false);
+			            }
+			        }
+	
+			    });
+	}
 }
