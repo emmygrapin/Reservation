@@ -3,6 +3,8 @@ package fr.eni.reservation.ihm;
 import java.awt.Container;
 import java.util.List;
 
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
 import fr.eni.reservation.bo.Spectacle;
@@ -31,6 +33,7 @@ public class ApplyController {
 		
 		JScrollPane scroll = new JScrollPane(contain);
 		ecr.setContentPane(scroll);	
+		
 	}
 	
 	public static ApplyController getInstance() throws DALException
@@ -70,6 +73,28 @@ public class ApplyController {
 		ecr.validate();
 		ecr.repaint();
 	}
+	
+	public void message(String dialog){
+		String message = null;
+		int icon = 0;
+		switch(dialog){
+			case "annulationConfirm":
+				message = "votre annulation de réservation est confirmée";
+				icon = JOptionPane.WARNING_MESSAGE;
+			break;
+			case "requiredFields":
+				message = "tous les champs sont requis";
+				icon = JOptionPane.ERROR_MESSAGE;
+			break;
+			case "noAvailablePlaces":
+				message = "il n'y a pas assez de places disponibles";
+				icon = JOptionPane.WARNING_MESSAGE;
+			break;
+		}
+		ecr.addDialog(message, icon);
+	}
+	
+	
 
 }
 
