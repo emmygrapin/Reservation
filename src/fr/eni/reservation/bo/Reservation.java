@@ -1,16 +1,16 @@
 package fr.eni.reservation.bo;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Reservation {
 	private String codeReservation;
 	private Client client;
 	private Spectacle spectacle;
 	private int nbPlacesReservation;
-	private Date dateReservation;
+	private Timestamp dateReservation;
 	
 	public Reservation(String codeReservation, Client client, Spectacle spectacle,
-			int nbPlacesReservation, Date dateReservation) {
+			int nbPlacesReservation, Timestamp dateReservation) {
 		super();
 		this.codeReservation = codeReservation;
 		this.client = client;
@@ -43,10 +43,10 @@ public class Reservation {
 	public void setNbPlacesReservation(int nbPlacesReservation) {
 		this.nbPlacesReservation = nbPlacesReservation;
 	}
-	public Date getDateReservation() {
+	public Timestamp getDateReservation() {
 		return dateReservation;
 	}
-	public void setDateReservation(Date dateReservation) {
+	public void setDateReservation(Timestamp dateReservation) {
 		this.dateReservation = dateReservation;
 	}
 	@Override

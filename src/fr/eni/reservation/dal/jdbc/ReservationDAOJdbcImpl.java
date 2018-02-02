@@ -87,7 +87,7 @@ public class ReservationDAOJdbcImpl implements ReservationDAO {
 										 clientDAO.selectById(rs.getInt("res_client")),    // res_client
 										 spectacleDAO.selectById(rs.getInt("res_spe_id")), // res_spe_id                     
 										 rs.getInt("res_nb_places"),         			   // res_nb_places        
-										 rs.getDate("res_date_reservation")); 			   // res_date_reservation    
+										 rs.getTimestamp("res_date_reservation")); 			   // res_date_reservation    
 			}
 
 		} catch (SQLException e) {
@@ -129,7 +129,7 @@ public class ReservationDAOJdbcImpl implements ReservationDAO {
 										 clientDAO.selectById(rs.getInt("res_client")),    // res_client
 										 spectacleDAO.selectById(rs.getInt("res_spe_id")), // res_spe_id 
 										 rs.getInt("res_nb_places"),                       // res_nb_places 
-										 rs.getDate("res_date_reservation"));              // res_date_reservation
+										 rs.getTimestamp("res_date_reservation"));              // res_date_reservation
 				liste.add(reserv);
 			}
 		} catch (SQLException e) {
@@ -160,11 +160,11 @@ public class ReservationDAOJdbcImpl implements ReservationDAO {
 			cnx = getConnection();
 			rqt = cnx.prepareStatement(sqlInsert);
 			rqt.setString(1, data.getCodeReservation());          // res_code_reservation
-			rqt.setInt(2, data.getClient().getIdClient());        // res_client
-			rqt.setInt(3, data.getSpectacle().getIdSpectacle());  // res_spe_id
-			rqt.setInt(4, data.getNbPlacesReservation());         // res_nb_places
-			rqt.setDate(5, data.getDateReservation());		      // res_date_reservation
-			
+			rqt.setInt(5, data.getClient().getIdClient());        // res_client
+			rqt.setInt(2, data.getSpectacle().getIdSpectacle());  // res_spe_id
+			rqt.setInt(3, data.getNbPlacesReservation());         // res_nb_places
+			rqt.setTimestamp(4, data.getDateReservation());		      // res_date_reservation
+			rqt.executeUpdate();
 
 		} catch (SQLException e) {
 			throw new DALException("Insert article failed - " + data, e);
@@ -236,7 +236,7 @@ public class ReservationDAOJdbcImpl implements ReservationDAO {
 										 clientDAO.selectById(rs.getInt("res_client")),    // res_client
 										 spectacleDAO.selectById(rs.getInt("res_spe_id")), // res_spe_id
 										 rs.getInt("res_nb_places"),                       // res_nb_places
-										 rs.getDate("res_date_reservation"));              // res_date_reservation
+										 rs.getTimestamp("res_date_reservation"));              // res_date_reservation
 				liste.add(reserv);
 			}
 		} catch (SQLException e) {
@@ -276,7 +276,7 @@ public class ReservationDAOJdbcImpl implements ReservationDAO {
 										 clientDAO.selectById(rs.getInt("res_client")),    // res_client
 										 spectacleDAO.selectById(rs.getInt("res_spe_id")), // res_spe_id
 										 rs.getInt("res_nb_places"),                       // res_nb_places
-										 rs.getDate("res_date_reservation"));              // res_date_reservation
+										 rs.getTimestamp("res_date_reservation"));              // res_date_reservation
 				liste.add(reserv);
 			}
 		} catch (SQLException e) {

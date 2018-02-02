@@ -20,7 +20,7 @@ public class ClientDAOJdbcImpl implements ClientDAO {
 			+ " from client where cli_id = ?";
 	private static final String sqlSelectAll = "select cli_id, cli_nom, cli_prenom, cli_email, cli_adresse, cli_cp, cli_ville"
 			+ " from client";
-	private static final String sqlInsert = "insert into client(cli_id, cli_nom, cli_prenom, cli_email, cli_adresse, cli_cp, cli_ville) values(?,?,?,?,?,?,?)";
+	private static final String sqlInsert = "insert into client(cli_nom, cli_prenom, cli_email, cli_adresse, cli_cp, cli_ville) values(?,?,?,?,?,?)";
 	private static final String sqlDelete = "delete from client where cli_id = ?";
 	
 	private Connection connection;

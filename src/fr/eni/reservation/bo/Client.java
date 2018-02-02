@@ -84,9 +84,7 @@ public class Client {
 	}
 	@Override
 	public String toString() {
-		return "Client [idClient=" + idClient + ", nomClient=" + nomClient + ", prenomClient=" + prenomClient
-				+ ", emailClient=" + emailClient + ", adresseClient=" + adresseClient + ", cpClient=" + cpClient
-				+ ", villeClient=" + villeClient + "]";
+		return this.getNomClient()+" "+this.getPrenomClient();
 	}
 	
 }

@@ -6,6 +6,8 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Vector;
@@ -27,8 +29,8 @@ import fr.eni.reservation.dal.DALException;
 public class ReservationController {
 	
 	private JTextField txtNom, txtPrenom, txtAdresse, txtEmail, txtVille, txtCP;
-	private JButton btnValider;
-	private JComboBox cbxPlaces;
+	private JButton btnValider, btnValider2;
+	private JComboBox cbxPlaces2, cbxPlaces, cbxClients;
 	
 	private static ReservationController _instance;
 	
@@ -67,7 +69,17 @@ public class ReservationController {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridwidth = 2;
-		panelReservation.add(new JLabel(spectacle.getArtiste()+", "+spectacle.getTitre()+" Places Restantes : "+spectacle.getPlacesDispos()), gbc);
+		panelReservation.add(new JLabel(spectacle.getArtiste()+", "+spectacle.getTitre()), gbc);
+		
+		gbc.anchor = GridBagConstraints.LINE_END;
+		gbc.gridx = 1;
+		gbc.gridwidth = 2;
+		panelReservation.add(new JLabel("Places Restantes : "+spectacle.getPlacesDispos()));
+		
+		
+		gbc.anchor = GridBagConstraints.LINE_START;
+		gbc.gridwidth = 1;
+		gbc.gridx = 0;
 		gbc.gridy = 1;
 		panelReservation.add(new JLabel(spectacle.getLieu()+", "+spectacle.getDate()), gbc);
 		gbc.gridwidth = 1;
@@ -101,13 +113,32 @@ public class ReservationController {
 		gbc.gridy = 7;
 		panelReservation.add(addFieldVille(), gbc);
 		gbc.gridy = 8;
-		panelReservation.add(addCbxNBPlaces(), gbc);
+		panelReservation.add(addCbxNBPlaces(0), gbc);
 		
+		//Buton Save New Client
 		gbc.gridx = 0;
 		gbc.gridy = 9;
 		gbc.gridwidth = 2;
 		gbc.anchor = GridBagConstraints.CENTER;
 		panelReservation.add(getBtnSave(spectacle), gbc);
+		
+		//Buton Save Old Client
+		gbc.gridx = 3;
+		gbc.gridy = 5;
+		gbc.anchor = GridBagConstraints.CENTER;
+		panelReservation.add(getBtnSaveClient(spectacle), gbc);
+		
+		//Client existant
+		gbc.gridx = 2;
+		gbc.gridy = 2;
+		gbc.gridwidth = 1;
+		
+		panelReservation.add(new JLabel("Client existant : "), gbc);
+		gbc.gridx = 3;
+		gbc.gridy = 3;
+		panelReservation.add(addCbxClients(), gbc);
+		gbc.gridy = 4;
+		panelReservation.add(addCbxNBPlaces(1), gbc);
 		
 		return panelReservation;
 	}
@@ -164,7 +195,7 @@ public class ReservationController {
 	
 	
 	//ComboBox
-	private JComboBox addCbxNBPlaces()
+	private JComboBox addCbxNBPlaces(int box)
 	{
 		Vector<Integer> places = new Vector<Integer>();
 		places.addElement(new Integer(1));
@@ -172,9 +203,33 @@ public class ReservationController {
 		places.addElement(new Integer(3));
 		places.addElement(new Integer(4));
 		places.addElement(new Integer(5));
+		if(box == 0)
+		{
+			this.cbxPlaces = new JComboBox(places);	
+			return this.cbxPlaces;
+		}
+		else
+		{
+			this.cbxPlaces2 = new JComboBox(places);	
+			return this.cbxPlaces2;
+		}
 
-		this.cbxPlaces = new JComboBox(places);
-		return this.cbxPlaces;
+	}
+
+	private JComboBox addCbxClients() throws DALException
+	{
+		Vector<Client> clients = new Vector<Client>();
+		List<Client> lesclients = ClientManager.getInstance().getClients();
+		
+		
+		
+		for(Client client : lesclients)
+		{
+			
+			clients.addElement(client);
+		}
+		this.cbxClients = new JComboBox(clients);
+		return this.cbxClients;
 	}
 	
 	//Button
@@ -190,7 +245,8 @@ public class ReservationController {
 				{
 					try {
 						Client client = newClient();
-						newReservation(client, spectacle);
+						newReservation(client, spectacle, 0);
+						ApplyController.getInstance().move("listResa", new ArrayList());
 					} catch (Exception e1) {
 						
 						e1.printStackTrace();
@@ -199,6 +255,32 @@ public class ReservationController {
 			});
 		}
 		return btnValider;
+	}
+	
+	
+	public JButton getBtnSaveClient(Spectacle spectacle)
+	{
+		if(btnValider2 == null)
+		{
+			btnValider2 = new JButton("Valider");
+			btnValider2.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					try {
+						Client client = (Client)cbxClients.getSelectedItem();
+						System.out.println("nom"+ client.getNomClient());
+						newReservation(client, spectacle, 1);
+						ApplyController.getInstance().move("listResa", new ArrayList());
+					} catch (Exception e1) {
+						
+						e1.printStackTrace();
+					}
+				}
+			});
+		}
+		return btnValider2;
 	}
 	
 	
@@ -212,21 +294,31 @@ public class ReservationController {
 	}
 	
 	
-	public void newReservation(Client client, Spectacle spectacle) throws Exception
+	public void newReservation(Client client, Spectacle spectacle, int box) throws Exception
 	{
-		 Calendar currenttime = Calendar.getInstance();
-		 Date sqldate = new Date((currenttime.getTime()).getTime());
-		    
+		 Timestamp timestamp = new Timestamp(System.currentTimeMillis()); 
 		ReservationManager reservationManager = ReservationManager.getInstance();
-		Reservation reservation = new Reservation(generateCode(), client, spectacle, (int)cbxPlaces.getSelectedItem(), sqldate);
+		String code = generateCode();
+		int places = 0;
+		if(box == 0)
+		{
+			places =  (int)cbxPlaces.getSelectedItem();
+		}
+		else
+		{
+			places =  (int)cbxPlaces2.getSelectedItem();
+		}
+		Reservation reservation = new Reservation(code, client, spectacle, places, timestamp);
 		reservationManager.addReservation(reservation);
+		MajPlaces(spectacle, places);
+		
 	}
 	
 	
-	public void MajPlaces(Spectacle spectacle) throws Exception
+	public void MajPlaces(Spectacle spectacle, int places) throws Exception
 	{		    
 		SpectacleManager spectacleManager = SpectacleManager.getInstance();
-		spectacle.setPlacesDispos(spectacle.getPlacesDispos() - (int)cbxPlaces.getSelectedItem());
+		spectacle.setPlacesDispos(spectacle.getPlacesDispos() - places);
 		spectacleManager.updateSpectacle(spectacle);
 	}
 	
