@@ -61,43 +61,50 @@ public class ReservationController {
 		//Espace entre les cases
 		gbc.insets = new Insets(5, 5, 5, 5);
 		gbc.anchor = GridBagConstraints.LINE_START;
-
+		
 		//Colonne 1
+		
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		panelReservation.add(new JLabel("Nom : "), gbc);
+		gbc.gridwidth = 2;
+		panelReservation.add(new JLabel(spectacle.getArtiste()+", "+spectacle.getTitre()+" Places Restantes : "+spectacle.getPlacesDispos()), gbc);
 		gbc.gridy = 1;
-		panelReservation.add(new JLabel("Prenom : "), gbc);
+		panelReservation.add(new JLabel(spectacle.getLieu()+", "+spectacle.getDate()), gbc);
+		gbc.gridwidth = 1;
 		gbc.gridy = 2;
-		panelReservation.add(new JLabel("Email : "), gbc);
+		panelReservation.add(new JLabel("Nom : "), gbc);
 		gbc.gridy = 3;
-		panelReservation.add(new JLabel("Adresse : "), gbc);
+		panelReservation.add(new JLabel("Prenom : "), gbc);
 		gbc.gridy = 4;
-		panelReservation.add(new JLabel("Code Postale : "), gbc);
+		panelReservation.add(new JLabel("Email : "), gbc);
 		gbc.gridy = 5;
-		panelReservation.add(new JLabel("Ville : "), gbc);
+		panelReservation.add(new JLabel("Adresse : "), gbc);
 		gbc.gridy = 6;
+		panelReservation.add(new JLabel("Code Postale : "), gbc);
+		gbc.gridy = 7;
+		panelReservation.add(new JLabel("Ville : "), gbc);
+		gbc.gridy = 8;
 		panelReservation.add(new JLabel("Places : "), gbc);
 		
 		//Colonne 2
 		gbc.gridx = 1;
-		gbc.gridy = 0;
-		panelReservation.add(addFieldNom(), gbc);
-		gbc.gridy = 1;
-		panelReservation.add(addFieldPrenom(), gbc);
 		gbc.gridy = 2;
-		panelReservation.add(addFieldEmail(), gbc);
+		panelReservation.add(addFieldNom(), gbc);
 		gbc.gridy = 3;
-		panelReservation.add(addFieldAdresse(), gbc);
+		panelReservation.add(addFieldPrenom(), gbc);
 		gbc.gridy = 4;
-		panelReservation.add(addFieldCP(), gbc);
+		panelReservation.add(addFieldEmail(), gbc);
 		gbc.gridy = 5;
-		panelReservation.add(addFieldVille(), gbc);
+		panelReservation.add(addFieldAdresse(), gbc);
 		gbc.gridy = 6;
+		panelReservation.add(addFieldCP(), gbc);
+		gbc.gridy = 7;
+		panelReservation.add(addFieldVille(), gbc);
+		gbc.gridy = 8;
 		panelReservation.add(addCbxNBPlaces(), gbc);
 		
 		gbc.gridx = 0;
-		gbc.gridy = 7;
+		gbc.gridy = 9;
 		gbc.gridwidth = 2;
 		gbc.anchor = GridBagConstraints.CENTER;
 		panelReservation.add(getBtnSave(spectacle), gbc);

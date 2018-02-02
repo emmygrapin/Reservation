@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.JScrollPane;
 
+import fr.eni.reservation.bo.Spectacle;
 import fr.eni.reservation.dal.DALException;
 
 public class ApplyController {
@@ -60,6 +61,9 @@ public class ApplyController {
 			break;
 			case "listClient":
 				ecr.setContentPane(clientController.viewClient());
+			break;
+			case "newResa":
+				ecr.setContentPane(reservationController.NewReservation((Spectacle) liste.get(0)));
 			break;
 		}
 		

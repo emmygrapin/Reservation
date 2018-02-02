@@ -3,6 +3,7 @@ package fr.eni.reservation.ihm;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -58,7 +59,7 @@ public class reservation extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				try {
-					ApplyController.getInstance().move("listSpec");
+					ApplyController.getInstance().move("listSpec", new ArrayList<>());
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -73,7 +74,7 @@ public class reservation extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				try {
-					ApplyController.getInstance().move("listResa");
+					ApplyController.getInstance().move("listResa", new ArrayList<>());
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -87,7 +88,7 @@ public class reservation extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				try {
-					ApplyController.getInstance().move("listClient");
+					ApplyController.getInstance().move("listClient", new ArrayList<>());
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
