@@ -29,8 +29,12 @@ import fr.eni.reservation.dal.DALException;
 public class ReservationController {
 	
 	private JTextField txtNom, txtPrenom, txtAdresse, txtEmail, txtVille, txtCP;
+
 	private JButton btnValider, btnValider2;
 	private JComboBox cbxPlaces2, cbxPlaces, cbxClients;
+	
+	private JPanel panelReservations;
+
 	
 	private static ReservationController _instance;
 	
@@ -257,7 +261,6 @@ public class ReservationController {
 		return btnValider;
 	}
 	
-	
 	public JButton getBtnSaveClient(Spectacle spectacle)
 	{
 		if(btnValider2 == null)
@@ -282,8 +285,6 @@ public class ReservationController {
 		}
 		return btnValider2;
 	}
-	
-	
 	
 	public Client newClient() throws DALException
 	{
@@ -410,7 +411,10 @@ public class ReservationController {
 					ReservationManager.getInstance().removeReservation(reservation);
 					Spectacle spectacleReservation = reservation.getSpectacle();
 					spectacleReservation.setPlacesDispos(spectacleReservation.getPlacesDispos() + reservation.getNbPlacesReservation());
+					
 					SpectacleManager.getInstance().updateSpectacle(spectacleReservation);
+					ApplyController.getInstance().move("listResa", new ArrayList<>());
+					ApplyController.getInstance().message("annulationConfirm");
 					
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -418,7 +422,6 @@ public class ReservationController {
 				}
 			}
 		});
-		return annulerButton;
+		return annulerButton;	
 	}
-	
 }
