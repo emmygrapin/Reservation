@@ -70,6 +70,12 @@ public class ApplyController {
 			break;
 		}
 		
+		
+		Container contain = ecr.getContentPane();
+		
+		JScrollPane scroll = new JScrollPane(contain);
+		ecr.setContentPane(scroll);	
+		
 		ecr.validate();
 		ecr.repaint();
 	}
